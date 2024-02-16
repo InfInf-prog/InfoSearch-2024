@@ -11,7 +11,7 @@ DOWNLOADING_FILES_OUTPUT = "выкачка"
 
 
 def crawl_and_save_articles(start_id: int, num_articles: int):
-    print("Crawling Website".center(62, "="))
+    print("Crawling start...".center(62, "="))
 
     articles_index = {}
 
@@ -36,15 +36,13 @@ def crawl_and_save_articles(start_id: int, num_articles: int):
 
 
 def create_result_files(articles_index):
-    print("Saving Index".center(62, "="))
-
-    print("Saving index.txt...")
     with open("index.txt", "w", encoding="utf-8") as index_txt:
         content = [f"{key} {articles_index[key]}" for key in articles_index.keys()]
         index_txt.write("\n".join(content))
+    print("Saved the index.".center(62, "="))
 
-    print("Making Archive".center(62, "="))
     shutil.make_archive(DOWNLOADING_FILES_OUTPUT, 'zip', PAGES_DIR)
+    print("Created the archive.".center(62, "="))
 
 
 def create_or_remove_dir():
