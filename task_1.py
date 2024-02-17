@@ -3,6 +3,8 @@ import os
 import requests
 import shutil
 
+from bs4 import BeautifulSoup
+
 SITE_URL = "https://vc.ru"
 
 PAGES_DIR = "data"
@@ -23,8 +25,13 @@ def crawl_and_save_articles(start_id: int, num_articles: int):
         response = requests.get(article_url)
 
         if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "html.parser")
+            for data in soup(['style', 'script', 'link']):
+                data.decompose()
+            page_content = str(soup)
+
             with open(article_filename, "w", encoding="utf-8") as article_file:
-                article_file.write(response.text)
+                article_file.write(page_content)
             articles_index[current_article_id] = article_url
 
         current_article_id += 1
