@@ -82,4 +82,8 @@ if __name__ == "__main__":
             exit()
 
         expression, variables_map = map_query_words(user_input.lower())
-        boolean_search(expr(expression), variables_map, inverted_index)
+        try:
+            result_expression = expr(expression)
+            boolean_search(result_expression, variables_map, inverted_index)
+        except:
+            print("Invalid exception. Please try again")
