@@ -13,3 +13,10 @@ python3 task_*.py
 ### Задание 1
 1. Архив с выкаченными страницами: [выкачка.zip](выкачка.zip)
 2. Индекс: [index.txt](index.txt)
+
+### Задание 2
+1. Файл со списком токенов: [tokens.txt](tokens.txt)
+2. Файл по списком лемматизированных токенов: [lemma_tokens.txt](lemma_tokens.txt)
+
+### Задание 3
+1. Файл с инвертированным индексом: [inverted_index.json](inverted_index.json)
