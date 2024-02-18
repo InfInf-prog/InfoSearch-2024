@@ -89,7 +89,7 @@ doc_to_lemma = read_doc_to_lemma_tf_idf()
 lemma_to_doc = read_lemma_to_doc_tf_idf()
 doc_lengths = {doc: calculate_doc_vector_len(doc_to_lemma[doc]) for doc in docs_list}
 token_to_lemma = read_lemma_tokens()
-reverse_index = read_index()
+reverse_index = read_inverted_index()
 
 if __name__ == '__main__':
 
