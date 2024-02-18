@@ -10,6 +10,7 @@ from nltk.corpus import stopwords
 parser = 'html.parser'
 morph = pymorphy2.MorphAnalyzer()
 ZIP_FILE_PATH = "выкачка.zip"
+INVERTED_INDEX_FILE = 'inverted_index.json'
 TOKENS_TFIDF_DIR = 'tokens_tfidf/'
 LEMMAS_TFIDF_DIR = 'lemmas_tfidf/'
 
@@ -34,11 +35,9 @@ def tokenize_text(text):
 def create_inverted_index_tokens(zip_f):
     index = {}
 
-    # range zip file with data (html)
     for i, file in enumerate(zip_f.filelist):
         content = zip_f.open(file)
         text = BeautifulSoup(content, parser).get_text()
-        # get tokens from file
         tokens = set(tokenize_text(text))
 
         for token in tokens:
@@ -53,12 +52,13 @@ def save_inverted_index(filename, ind):
     for i in ind:
         inverted_index_file.write(i + ": " + " ".join(map(lambda file_number: str(file_number), ind[i])) + "\n")
     inverted_index_file.close()
+
 def get_token_list(text):
     tokens = word_tokenize(text.replace('.', ' '))
     return list_extract_unique_filtered_tokens(tokens)
 
 def read_index(index_file_path):
-    with open("inverted_index.json", 'r', encoding='utf-8') as file:
+    with open(INVERTED_INDEX_FILE, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
@@ -99,11 +99,10 @@ def calculate_tfidf(zip_f, lemmas_index, tokens_index):
         with open(f"{LEMMAS_TFIDF_DIR}{file.filename}.txt", "w", encoding='utf-8') as lemma_f:
             lemma_f.write("\n".join(res_lemmas))
 
-
 if __name__ == '__main__':
     zip_file = zipfile.ZipFile(ZIP_FILE_PATH, "r")
 
-    lemmas_index_path = "inverted_index.json"
+    lemmas_index_path = INVERTED_INDEX_FILE
     tokens_index_path = "inverted_index_tokens.txt"
 
     inverted_index_tokens = create_inverted_index_tokens(zip_file)
