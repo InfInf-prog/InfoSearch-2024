@@ -8,7 +8,7 @@ document_locations = set()
 
 
 def read_inverted_index():
-    with open('inverted_index.json', 'r') as file:
+    with open('inverted_index.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
