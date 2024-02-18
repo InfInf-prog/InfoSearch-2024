@@ -13,7 +13,7 @@ def build_index():
     filenames = listdir(PAGES_DIR)
     filenames.sort(key=lambda x: int(x.replace('.html', '')))
 
-    texts = [BeautifulSoup(open(PAGES_DIR + f).read(), 'html.parser').
+    texts = [BeautifulSoup(open(PAGES_DIR + f, encoding='utf-8').read(), 'html.parser').
              get_text().lower() for f in filenames if isfile(join(PAGES_DIR, f))]
 
     inverted_index = {}
