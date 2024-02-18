@@ -20,3 +20,7 @@ python3 task_*.py
 
 ### Задание 3
 1. Файл с инвертированным индексом: [inverted_index.json](inverted_index.json)
+
+### Задание 4
+1. Директория с файлами со списком терминов (токенов) и подсчитанными tf-idf: [tokens_tfidf](tokens_tfidf)
+2. Директория с файлами по списком лемматизированных форм и подсчитанными tf-idf: [lemmas_tfidf](lemmas_tfidf)
