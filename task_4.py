@@ -14,12 +14,14 @@ INVERTED_INDEX_FILE = 'inverted_index.json'
 TOKENS_TFIDF_DIR = 'tokens_tfidf/'
 LEMMAS_TFIDF_DIR = 'lemmas_tfidf/'
 
+
 def extract_unique_filtered_tokens(tokens):
     res = []
     for token in tokens:
         if token.lower() not in stopwords.words("russian") and re.compile("^[а-яё]+$").match(token.lower()):
             res.append(token.lower())
     return set(res)
+
 
 def list_extract_unique_filtered_tokens(tokens):
     res = []
@@ -28,9 +30,11 @@ def list_extract_unique_filtered_tokens(tokens):
             res.append(token.lower())
     return list(res)
 
+
 def tokenize_text(text):
     tokens = word_tokenize(text.replace('.', ' '))
     return extract_unique_filtered_tokens(tokens)
+
 
 def create_inverted_index_tokens(zip_f):
     index = {}
@@ -47,29 +51,36 @@ def create_inverted_index_tokens(zip_f):
                 index[token] = {i}
     return index
 
+
 def save_inverted_index(filename, ind):
     inverted_index_file = open(filename, "a", encoding='utf-8')
     for i in ind:
         inverted_index_file.write(i + ": " + " ".join(map(lambda file_number: str(file_number), ind[i])) + "\n")
     inverted_index_file.close()
 
+
 def get_token_list(text):
     tokens = word_tokenize(text.replace('.', ' '))
     return list_extract_unique_filtered_tokens(tokens)
+
 
 def read_index(index_file_path):
     with open(INVERTED_INDEX_FILE, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
+
 def calculate_tf(q, tokens):
     return tokens.count(q) / float(len(tokens))
+
 
 def calculate_idf(q, index, docs_count=100):
     return math.log(docs_count / float(len(index[q])))
 
+
 def lemmatize_word(word):
     return morph.parse(word.replace("\n", ""))[0].normal_form
+
 
 def calculate_tfidf(zip_f, lemmas_index, tokens_index):
     for i, file in enumerate(zip_file.filelist):
@@ -98,6 +109,7 @@ def calculate_tfidf(zip_f, lemmas_index, tokens_index):
 
         with open(f"{LEMMAS_TFIDF_DIR}{file.filename}.txt", "w", encoding='utf-8') as lemma_f:
             lemma_f.write("\n".join(res_lemmas))
+
 
 if __name__ == '__main__':
     zip_file = zipfile.ZipFile(ZIP_FILE_PATH, "r")
