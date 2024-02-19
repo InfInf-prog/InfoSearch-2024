@@ -74,13 +74,15 @@ def process_query(query: str):
     return dict(sorted(results.items(), key=lambda r: r[1], reverse=True))
 
 
+docs_list = os.listdir(LEMMAS_TFIDF)
+doc_to_lemma = load_doc_to_lemma_tf_idf()
+lemma_to_doc = load_lemma_to_doc_tf_idf()
+doc_lengths = {doc: calculate_doc_vector_length(doc_to_lemma[doc]) for doc in docs_list}
+token_to_lemma = load_lemma_tokens()
+reverse_index = load_inverted_index()
+
+
 if __name__ == '__main__':
-    docs_list = os.listdir(LEMMAS_TFIDF)
-    doc_to_lemma = load_doc_to_lemma_tf_idf()
-    lemma_to_doc = load_lemma_to_doc_tf_idf()
-    doc_lengths = {doc: calculate_doc_vector_length(doc_to_lemma[doc]) for doc in docs_list}
-    token_to_lemma = load_lemma_tokens()
-    reverse_index = load_inverted_index()
 
     while True:
         user_input = input("Input search expression:\n")
