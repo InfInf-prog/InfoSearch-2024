@@ -64,7 +64,6 @@ def merge_or(set1, set2):
 
 
 def process_query(query: str):
-    print(query)
     tokens = word_tokenize(query, language='russian')
     lemmas = [token_to_lemma[token] for token in tokens if token in token_to_lemma]
     doc_set = set()
